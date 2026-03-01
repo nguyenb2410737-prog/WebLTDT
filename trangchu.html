@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Theory</title>
+    <style>
+        body {
+            background-color: #002b1d;
+            margin: 20px;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #003326; 
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center; 
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            color: #42f5a4;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 20px; 
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-left: auto; 
+        }
+
+        .btn {
+            background-color: #42f5a4;
+            color: #003326;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0; 
+            background-color: #004d33;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .container {
+            max-width: 1000px;  
+            margin: 0 auto;    
+            padding: 20px;     
+            background-color: #003326; 
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">GRAPH THEORY</div>
+
+        <div class="button-group">
+            <a href="Trangchu.html" class="btn">Trang chủ</a>
+            <a href="Mophong.html" class="btn">Mô phỏng</a>
+            
+            <div class="dropdown">
+                <button class="btn">Thuật toán ▼</button>
+                <div class="dropdown-content">
+                    <a href="#">BFS</a>
+                    <a href="#">DFS</a>
+                    <a href="#">Dijkstra</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center;">Đồ Thị Euler</h1>
+        <h2>1. Bài toán 7 cây cầu thành Königsberg (1736)</h2>
+        <p>Thành phố Königsberg (nay là Kaliningrad, Nga) có dòng sông Pregel chảy qua, chia thành phố thành 4 vùng đất (A, B, C, D). Người ta xây dựng 7 cây cầu nối các vùng đất này với nhau.</p>
+        <p>Câu hỏi đặt ra là: Có cách nào đi dạo qua tất cả 7 cây cầu, mỗi cây cầu đúng một lần và quay trở về điểm xuất phát không?</p>
+        <p>Leonhard Euler, một nhà toán học thiên tài, đã nhận ra rằng hình dáng địa lý không quan trọng. Ông đã đơn giản hóa bản đồ thành một đồ thị:
+            <ul>
+                <li>Các vùng đất là các đỉnh (Nodes).</li>
+                <li>Các cây cầu là các cạnh (Edges).</li>
+            </ul>
+        </p>
+        <div style="text-align: center;">
+             <img src="https://s3.cloud.cmctelecom.vn/tinhte2/2020/12/5261448_bai-toan-7-cay-cau-2.jpg" width="500" height="300"  alt="Bài toán 7 cây cầu">
+        </div>
+        <h2>2. Các khái niệm cơ bản về Đồ thị Euler</h2>
+        <p>Để hiểu lời giải của Euler, chúng ta cần nắm hai khái niệm then chốt:
+            <ul>
+                <li>Bậc của đỉnh (<i>deg(v)</i>): Là số lượng cạnh nối vào đỉnh đó.</li>
+                <li>Chu trình Euler: Là đường đi khép kín đi qua tất cả các cạnh của đồ thị, mỗi cạnh đúng một lần.</li>
+                <li>Đường đi Euler: Là đường đi (không nhất thiết khép kín) đi qua tất cả các cạnh của đồ thị, mỗi cạnh đúng một lần.</li>
+            </ul>
+        </p>
+
+        <h2>3. Điều kiện tồn tại (Định lý Euler)</h2>
+        <p>Euler đã chứng minh một quy luật cực kỳ đơn giản nhưng mạnh mẽ để xác định khả năng đi qua các cây cầu:</p>
+
+    </div>
+    
+</body>
+</html>
