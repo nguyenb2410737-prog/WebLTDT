@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Theory - Thuật toán</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="main-header">
+    <h1>GRAPH THEORY</h1>
+</header>
+
+<nav class="main-nav">
+    <a href="index.html">Trang chủ</a>
+    <a href="algorithm.html">Thuật toán</a>
+</nav>
+
+<div class="main-layout">
+
+    <div class="control-area">
+
+        <h2>Chạy thuật toán</h2>
+
+        <label>Chọn thuật toán:</label>
+        <select id="algorithm">
+            <option value="bfs">BFS</option>
+            <option value="dfs">DFS</option>
+        </select>
+
+        <label>Loại đồ thị:</label>
+        <select id="graphType">
+            <option value="undirected">Vô hướng</option>
+            <option value="directed">Có hướng</option>
+        </select>
+
+        <label>Số đỉnh:</label>
+        <input type="number" id="vertices" min="1">
+
+        <label>Danh sách cạnh (mỗi dòng: u v):</label>
+        <textarea id="edgeList" rows="6"></textarea>
+
+        <label>Đỉnh bắt đầu:</label>
+        <input type="number" id="startVertex" min="0">
+
+        <div class="button-group">
+            <button class="primary-btn" onclick="runAlgorithm()">
+                🚀 Chạy thuật toán
+            </button>
+        </div>
+
+        <label>Kết quả:</label>
+        <textarea id="resultBox" readonly rows="3"></textarea>
+
+    </div>
+
+    <div class="graph-area">
+        <h2>Vùng vẽ đồ thị</h2>
+        <canvas id="graphCanvas" width="800" height="500"></canvas>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
