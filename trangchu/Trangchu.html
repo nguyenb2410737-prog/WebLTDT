@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Theory</title>
+    <style>
+        body {
+            background-color: #002b1d;
+            margin: 20px;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #003326;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            color: #42f5a4;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .btn {
+            background-color: #42f5a4;
+            color: #003326;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #004d33;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        /* Màu mặc định cho các link */
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: 0.2s;
+            /* Thêm cái này để màu đổi mượt mà hơn */
+        }
+
+        /* Hiệu ứng khi đưa chuột vào từng mục */
+        .dropdown-content a:hover {
+            background-color: #006644;
+            /* Màu xanh sáng hơn màu cũ một chút */
+            color: #ffcc00;
+            /* Ví dụ: đổi chữ sang màu vàng */
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #003326;
+            border-radius: 10px;
+        }
+
+        .doan-van {
+            text-indent: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">GRAPH THEORY</div>
+
+        <div class="button-group">
+            <a href="Trangchu.html" class="btn">Trang chủ</a>
+            <a href="Mophong.html" class="btn">Mô phỏng</a>
+
+            <div class="dropdown">
+                <button class="btn">Thuật toán ▼</button>
+                <div class="dropdown-content">
+                    <a href="TT_BFS.html">BFS</a>
+                    <a href="TT_DFS.html">DFS</a>
+                    <a href="TT_Dijkstra.html">Dijkstra</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center;">Đồ Thị Euler</h1>
+        <h2>1. Bài toán 7 cây cầu ở Konigsberg</h2>
+        <p class="doan-van">Ở Konigsberg nước Đức, có một con sông chảy qua thành phố làm cho trung tâm của thành phố
+            thành một hòn đảo.
+            Sau khi vượt qua hòn đảo con sông bị chia làm hai nhánh.
+            Bảy cây cầu được xây dựng để mọi người có thể đi từ phần đất này sang phần đất khác. Bản thô sơ của trung
+            tâm thành phố có dạng:
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+            <div style="text-align: center;">
+                <img src="https://s3.cloud.cmctelecom.vn/tinhte2/2020/12/5261448_bai-toan-7-cay-cau-2.jpg"
+                    style="width: 300px; height: 259px">
+            </div>
+
+            <div style="text-align: center;">
+                <img src="DT1.png" style="width: 300px; height: auto">
+            </div>
+        </div>
+
+
+        <p class="doan-van">Bài toán đặt ra là: Có thể nào, xuất phát từ một phần đất nào đó, đi qua tất cả các cây cầu,
+            mỗi cây cầu đúng
+            một lần và quay về nơi xuất phát hay không?</p>
+        <p class="doan-van">Nhà toán học Euler đã trả lời trọn vẹn bài toán này. Việc này đã đóng góp rất lớn cho sự
+            phát triển của lý
+            thuyết đồ thị.</p>
+
+        <h2>2. Đồ thị Euler và đồ thị nửa Euler</h2>
+        <p class="doan-van">G=(X,U) là đồ thị hữu hạn liên thông</p>
+        <p class="doan-van"><i><b>Đồ thị Euler</b></i></p>
+        <p class="doan-van">Một chu trình trên G đi qua tất cả các cạnh/cung của G và mỗi cạnh cung đúng một lần được
+            gọi là chu trình Euler.</p>
+        <p class="doan-van">Đồ thị G có chứa chu trình Euler được gọi là đồ thị Euler.</p>
+        <p class="doan-van">Các hình vẽ sau đây là đồ thị Euler:</p>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+            <div style="text-align: center;">
+                <img src="DT2.png" style="width: 300px; height: 200px">
+                <p style="color: white;">Đồ thị Euler abcde</p>
+            </div>
+
+            <div style="text-align: center;">
+                <img src="DT3.png" style="width: 300px; height: auto">
+                <p style="color: white;">Đồ thị Euler abcdea</p>
+            </div>
+        </div>
+
+        <p class="doan-van"><i><b>Đồ thị nửa Euler</b></i></p>
+        <p class="doan-van">Một đường đi trên G đi qua tất cả các cạnh/cung của G và mỗi cạnh/cung đúng một lần được gọi
+            là đường đi Euler.</p>
+        <p class="doan-van">Đồ thị G chứa đường đi Euler được gọi là đồ thị nửa Euler</p>
+        <p class="doan-van">Các hình vẽ sau đây là đồ thị nửa Euler</p>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+            <div style="text-align: center;">
+                <img src="DT4.png" style="width: 300px; height: auto">
+                <p style="color: white;">Đồ thị nửa Euler abdaedcb</p>
+            </div>
+
+            <div style="text-align: center;">
+                <img src="DT5.png" style="width: 300px; height: 199px">
+                <p style="color: white;">Đồ thị nửa Euler cdbcab</p>
+            </div>
+        </div>
+
+        <p class="doan-van">Từ các định nghĩa, nhận xét rằng: mọi đồ thị Euler đều là đồ thị nửa Euler</p>
+        <p class="doan-van">Vấn đề đặt ra là khi nào thì một đồ thị hữu hạn liên thông là một đồ thị Euler, nửa Euler?
+        </p>
+
+        <h2>3. Định lý Euler</h2>
+        <p class="doan-van"><i><b>Bổ đề</b></i></p>
+        <p class="doan-van">G = (X,U) là đồ thị vô hướng hữu hạn.</p>
+        <p class="doan-van">Nếu bậc của mỗi đỉnh G không nhỏ hơn 2 thì G có chứa chu trình.</p>
+        <p class="doan-van"><i><b>Định lý Euler</b></i></p>
+        <p class="doan-van">G = (X,U) là đồ thị vô hướng hữu hạn liên thông</p>
+        <p class="doan-van">G là đồ thị Euler khi và chỉ khi mọi đỉnh của G đều có bậc chẵn</p>
+        <p class="doan-van"><i><b>Hệ quả</b></i></p>
+        <p class="doan-van">G = (X,U) là đồ thị vô hướng hữu hạn liên thông.</p>
+        <p class="doan-van">G là đồ thị nửa Euler khi và chỉ khi G có không quá 2 đỉnh có bậc lẻ.</p>
+        <p class="doan-van"><i><b>Định lý</b></i></p>
+        <p class="doan-van">G = (X,U) là đồ thị có hướng hữu hạn liên thông mạnh</p>
+        <p class="doan-van">G là đồ thị Euler khi và chỉ khi bậc trong và bậc ngoài của một đỉnh x bất kỳ là bằng nhau,
+            tức là:</p>
+        <p style="text-indent: 300px">d<sup>-</sup>(x) = d<sup>+</sup>(x), &forall;x &in; X</p>
+
+        <h2>4. Xác định chu trình Euler</h2>
+        <p style="text-indent: 100px;">G=(U,X) là đồ thị vô hướng hữu hạn.</p>
+        <p style="text-indent: 100px;">Hãy tìm chu trình Euler của G nếu có.</p>
+         <p class="doan-van"><i><b>Bước 1:</b></i></p>
+        <p class="doan-van">Kiểm tra xem G có phải là đồ thị liên thông hay không.</p>
+        <p class="doan-van">- Nếu không thì giải thuật dừng và kết luận rằng đồ thị không có chu trình Euler.</p>
+        <p class="doan-van">Nếu phải thì sang bước 2</p>
+         <p class="doan-van"><i><b>Bước 2:</b></i></p>
+        <p class="doan-van">Kiểm tra xem có phải tất cả các đỉnh của G đều có bậc chẵn hay không.</p>
+        <p class="doan-van">- Nếu không thì giải thuật dừng và kết luận rằng đồ thị không có chu trình Euler</p>
+        <p class="doan-van">- Nếu phải thì sang bước 3.</p>
+         <p class="doan-van"><i><b>Bước 3:</b></i></p>
+        <p class="doan-van">- Xây dựng các chu trình trong G sao cho mỗi cạnh của đồ thị đều có một chu trình đi qua và chỉ được đi qua một lần.</p>
+        <p class="doan-van">- Ghép các chu trình đơn như trên lại tại các đỉnh chung thì thu được chu trình Euler.</p>
+        <p class="doan-van">Ví dụ:</p>
+        <p style="text-indent: 100px;">Đồ thị vô hướng sau đây có chứa chu trình Euler</p>
+
+        <div style="text-align: center;">
+                <img src="DT6.png" style="width: 600px; height: auto">
+        </div>
+
+        <p class="doan-van">Có nhiều cách thực hiện bước 3, có thể lần lượt xây dựng 3 chu trình:</p>
+        <p style="text-indent: 100px;">&mu;<sub>1</sub> : 1 - 3 - 5 - 8 - 10 - 5 - 1</p>
+        <p style="text-indent: 100px;">&mu;<sub>2</sub> : 3 - 4 - 6 - 9 - 8 - 6 - 3</p>
+        <p style="text-indent: 100px;">&mu;<sub>3</sub> : 4 - 2 - 7 - 11 - 9 - 7 - 4</p>
+
+        <p class="doan-van">Ghép 3 chu trình trên điểm chung ta có chu trình Euler.</p>
+
+
+
+
+        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center;">Đồ Thị Hamilton</h1>
+        <h2>1. Trò chơi Hamilton</h2>
+        <p class="doan-van">Lịch sử phát sinh đồ thị Hamilton xuất phát từ trò chơi của nhà toán học William Hamilton, đưa ra năm 1859 như sau: xác định đường đi theo
+            các cạnh của một thập nhị diện đều như hình vẽ sao cho phải đi qua tất cả các đỉnh, mỗi đỉnh đúng một lần rồi trở về đỉnh xuất phát.
+        </p>
+        <p class="doan-van">Có thể hình dung bài toán như việc tìm đường đi du lịch vòng quanh thế giới sao cho mỗi thành phố đều được viếng và chỉ viếng một lần duy nhất</p>
+        <div style="text-align: center;">
+                <img src="DT7.png" style="width: 600px; height: auto">
+        </div>
+
+        <h2>2. Đồ thị Hamilton và đồ thị nửa Hamilton</h2>
+        <p class="doan-van">G=(X,U) là đồ thị.</p>
+        <p class="doan-van"><i><b>Đồ thị Hamilton</b></i></p>
+        <p class="doan-van">Một chu trình trên G bắt đầu từ một đỉnh nào đó, đi qua tất cả các đỉnh của G và đi qua mỗi đỉnh đúng một lần, và quay về đỉnh xuất phát được
+            gọi là chu trình Hamilton. Một đồ thị được gọi là đồ thị Hamilton nếu nó có chứa chu trình Hamilton.
+        </p>
+        <p class="doan-van">Ví dụ</p>
+        
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+            <div style="text-align: center;">
+                <img src="DT8.png" style="width: 300px; height: auto">
+                <p style="color: white;">Đồ thị Hamilton</p>
+            </div>
+
+            <div style="text-align: center;">
+                <img src="DT9.png" style="width: 300px; height: auto">
+                <p style="color: white;">Đồ thị Hamilton</p>
+            </div>
+        </div>
+
+        <p class="doan-van"><i><b>Đồ thị nửa Hamilton</b></i></p>
+        <p class="doan-van">Một đường đi / đường đi có hướng trên G đi qua tất cả các đỉnh của G và đi qua mỗi đỉnh đúng một lần được gọi là đường đi Hamilton. Một 
+            đồ thị được gọi là đồ thị nửa Hamilton nếu nó có chứa đường đi Hamilton.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+            <div style="text-align: center;">
+                <img src="DT10.png" style="width: 300px; height: auto">
+                <p style="color: white;">Đồ thị nửa Hamilton</p>
+            </div>
+
+            <div style="text-align: center;">
+                <img src="DT11.png" style="width: 300px; height: 268px">
+                <p style="color: white;">Đồ thị nửa Hamilton</p>
+            </div>
+        </div>
+
+        <p class="doan-van"> Việc tìm tiêu chuẩn để nhờ đó nhận biết một đồ thị là đồ thị Hamilton là một vấn đề khó. Một số kết quả thu được được trình bày trong các định
+            lý sau đây:
+        </p>
+
+        <h2>3. Các định lý</h2>
+        <p class="doan-van"><i><b>Định lý Dirak</b></i></p>
+        <p style="text-indent: 100px;">G=(X,U) là đồ thị đơn vô hướng với |X|>2.</p>
+        <p style="text-indent: 100px;">Nếu mỗi đỉnh đều có bậc >= |X|/2 thì G là đồ thị Hamilton.</p>
+        <p class="doan-van"><i><b>Định lý Dirak tổng quát</b></i></p>
+        <p style="text-indent: 100px;">G=(X,U) là đồ thị liên thông có hướng.</p>
+        <p style="text-indent: 100px;">Nếu bậc trong, bậc ngoài của mỗi đỉnh đều >= |X|/2 thì G là đồ thị Hamilton.</p>
+        <p class="doan-van"><i><b>Định lý</b></i></p>
+        <p style="text-indent: 100px;">Nếu G=(X,U) là đồ thị có hướng đầy đủ thì G là đồ thị nửa Hamilton.</p>
+        <p class="doan-van"><i><b>Hệ quả</b></i></p>
+        <p style="text-indent: 100px;">Nếu G=(X,U) là đồ thị vô hướng đầy đủ với |X|>=3 thì G là đồ thị Hamilton.</p>
+        <p class="doan-van"><i><b>Định nghĩa</b></i></p>
+        <p class="doan-van">Người ta gọi một đồ thị có hướng là một đồ thị đấu loại khi 2 đỉnh bất kỳ không tính đến thứ tự của nó được nối với nhau bằng đúng một cung.</p>
+        <p class="doan-van">Ví dụ</p>
+        <p style="text-indent: 100px;">Đồ thị sau đây là đồ thị đấu loại</p>
+
+        <div style="text-align: center;">
+                <img src="DT12.png" style="width: 300px; height: auto">
+        </div>
+        <p class="doan-van"><i><b>Định lý</b></i></p>
+        <p class="doan-van">1-Mọi đồ thị đấu loại là đồ thị nửa Hamilton.</p>
+        <p class="doan-van">2-Mọi đồ thị đấu loại liên thông có hướng là đồ thị Hamilton.</p>
+
+        <h2>4. Xác định chu trình Hamilton</h2>
+        <p class="doan-van">Để tìm chu trình Hamilton trên đồ thị G người ta dựa vào nhận xét sau: Mỗi đỉnh trên chu trình Hamilton là đầu mút của đúng hai cạnh trên
+            chu trình đó. Từ đó người ta có quy tắc:
+        </p>
+        <p class="doan-van">1-Nếu tồn tại đỉnh có bậc <=1 thì đồ thị G không có chu trình Hamilton.</p>
+        <p class="doan-van">2-Nếu đỉnh x có bậc bằng đúng 2 thì cả hai cạnh chứa x đều phải thuộc chu trình Hamilton.</p>
+        <p class="doan-van">3-Chu trình Hamilton không chứa chu trình con thực sự nào.</p>
+        <p class="doan-van">4-Trong quá trình xây dựng chu trình Hamilton, sau khi lấy hai cạnh trong số các cạnh của một đỉnh x nào đó đặt vào chu trình thì không
+            thể lấy thêm cạnh nào nữa đưa vào chu trình, do đó có thể xóa tất cả các cạnh còn lại chứa x.
+        </p>
+    </div>
+
+</body>
+
+</html>
