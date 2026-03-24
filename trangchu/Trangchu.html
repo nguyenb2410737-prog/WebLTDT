@@ -2,122 +2,43 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Graph Theory</title>
     <style>
-        body {
-            background-color: #002b1d;
-            margin: 20px;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        .navbar {
-            background-color: #003326;
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            color: #42f5a4;
-            font-weight: bold;
-            font-size: 20px;
-            margin-right: 20px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-left: auto;
-        }
-
-        .btn {
-            background-color: #42f5a4;
-            color: #003326;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #004d33;
-            min-width: 120px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 5px;
-        }
-
-        /* Màu mặc định cho các link */
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: 0.2s;
-            /* Thêm cái này để màu đổi mượt mà hơn */
-        }
-
-        /* Hiệu ứng khi đưa chuột vào từng mục */
-        .dropdown-content a:hover {
-            background-color: #006644;
-            /* Màu xanh sáng hơn màu cũ một chút */
-            color: #ffcc00;
-            /* Ví dụ: đổi chữ sang màu vàng */
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #003326;
+            background-color: #818cf8;
             border-radius: 10px;
         }
 
         .doan-van {
             text-indent: 20px;
         }
+
+
     </style>
 </head>
-
 <body>
 
-    <div class="navbar">
-        <div class="logo">GRAPH THEORY</div>
+    <header class="header">
+      <div class="brand">graph theory</div>
+      <nav class="sidebar">
+        <a href="index.html" class="myButton">Trang chủ</a>
+        <a href="Mo_phong.html" class="myButton">Mô phỏng</a>
 
-        <div class="button-group">
-            <a href="Trangchu.html" class="btn">Trang chủ</a>
-            <a href="Mophong.html" class="btn">Mô phỏng</a>
-
-            <div class="dropdown">
-                <button class="btn">Thuật toán ▼</button>
-                <div class="dropdown-content">
-                    <a href="TT_BFS.html">BFS</a>
-                    <a href="TT_DFS.html">DFS</a>
-                    <a href="TT_Dijkstra.html">Dijkstra</a>
-                </div>
-            </div>
+        <div class="dropdown">
+          <button class="myButton dropdown-toggle">Thuật toán</button>
+          <ul class="dropdown-menu">
+            <li><a href="BFS.html">Code BFS</a></li>
+            <li><a href="DFS.html">Code DFS</a></li>
+          </ul>
         </div>
-    </div>
+      </nav>
+    </header>
 
     <div class="container">
         <h1 style="margin-top: 40px; margin-left: 20px; text-align: center;">Đồ Thị Euler</h1>
@@ -324,5 +245,4 @@
     </div>
 
 </body>
-
 </html>
