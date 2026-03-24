@@ -1,74 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Mô phỏng duyệt đồ thị</title>
-  </head>
-  <body>
-    <header class="header">
-      <div class="brand">graph theory</div>
-      <nav class="sidebar">
-        <a href="index.html" class="myButton">Trang chủ</a>
-        <a href="Mo_phong.html" class="myButton">Mô phỏng</a>
-        <div class="dropdown">
-          <button class="myButton dropdown-toggle">Thuật toán ▾</button>
-          <ul class="dropdown-menu">
-            <li><a href="BFS.html">Code BFS</a></li>
-            <li><a href="DFS.html">Code DFS</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Mô phỏng duyệt đồ thị</title>
+</head>
 
-    <div class="test_box">
-      <div class="scan">
-        <label for="algo-select">Chọn thuật toán</label>
-        <select id="algo-select" class="my-dropdown">
-          <option value="bfs">Duyệt BFS (Chiều rộng)</option>
-          <option value="dfs">Duyệt DFS (Chiều sâu)</option>
-          <option value="dijkstra">Thuật toán Dijkstra (Đường đi ngắn nhất)</option>
-        </select>
-        <hr />
-        <br />
-        <label for="graph-select">Hướng đồ thị</label>
-        <select id="algo-select" class="my-dropdown">
-          <option value="bfs">Có hướng</option>
-          <option value="dfs">Vô hướng</option>
-        </select>
-        <hr />
-        <br />
-        <label for="node-number">Nhập số đỉnh</label>
-        <input type="number" name="" id="" />
-        <hr />
-        <br />
-        <label for="edge-list">Danh sách cung (u v):</label>
-        <small>Mỗi dòng là một cung, ví dụ: 1 2</small>
-        <textarea
-          id="edge-list"
-          class="my-textarea"
-          placeholder="1 2&#10;1 3&#10;2 4"
-          rows="4"
-        ></textarea>
-        <hr />
-        <br />
-        <label for="node-start">Chọn đỉnh bắt đầu</label>
-        <input type="text" name="" id="" />
-        <hr />
-        <br />
-        <input type="button" class="myButton" value="RUN" />
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">Graph theory</div>
+    <nav class="sidebar">
+      <a href="PT_index.html" class="myButton">Trang chủ</a>
+      <a href="PT_Mo_phong.html" class="myButton">Mô phỏng</a>
+      <div class="dropdown">
+        <button class="myButton dropdown-toggle">Thuật toán ▾</button>
+        <ul class="dropdown-menu">
+          <li><a href="PT_BFS.html">Code BFS</a></li>
+          <li><a href="PT_DFS.html">Code DFS</a></li>
+        </ul>
       </div>
+    </nav>
+  </header>
 
-      <div class="run">
-        <div class="graph">
-          <div class="conclusion">
-            <p>Thứ tự duyệt:</p>
-          </div>
+  <!-- MAIN -->
+  <div class="test_box">
+
+    <!-- PANEL TRÁI -->
+    <div class="scan">
+
+      <label>Chọn thuật toán</label>
+      <select id="algo-select" class="my-dropdown">
+        <option value="bfs">Duyệt BFS (Chiều rộng)</option>
+        <option value="dfs">Duyệt DFS (Chiều sâu)</option>
+        <option value="dijkstra">Dijkstra</option>
+      </select>
+
+      <hr /><br />
+
+      <label>Hướng đồ thị</label>
+      <select id="graph-type" class="my-dropdown">
+        <option value="directed">Có hướng</option>
+        <option value="undirected">Vô hướng</option>
+      </select>
+
+      <hr /><br />
+
+      <label>Nhập số đỉnh</label>
+      <input type="number" id="node-count" />
+
+      <hr /><br />
+
+      <label>Danh sách cung (u v)</label>
+      <small>Mỗi dòng 1 cạnh</small>
+      <textarea
+        id="edge-list"
+        class="my-textarea"
+        placeholder="Ví dụ:&#10;1 2&#10;1 3&#10;2 4"
+        rows="5"
+      ></textarea>
+
+      <hr /><br />
+
+      <label>Đỉnh bắt đầu</label>
+      <input type="number" id="start-node" />
+
+      <hr /><br />
+
+      <button id="run-btn" class="myButton">RUN</button>
+
+    </div>
+
+    <!-- PANEL PHẢI -->
+    <div class="run">
+      <div class="graph" id="graph">
+
+        <!-- SVG VẼ CẠNH -->
+        <svg id="edges" width="100%" height="100%">
+          <defs>
+            <marker id="arrowhead"
+              markerWidth="10"
+              markerHeight="7"
+              refX="10"
+              refY="3.5"
+              orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" class="arrow"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <!-- KẾT QUẢ -->
+        <div class="conclusion">
+          <p>Thứ tự duyệt:</p>
+          <span id="result"></span>
         </div>
+
       </div>
     </div>
-  </body>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
+
+</body>
 </html>

@@ -33,7 +33,16 @@ body {
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 4px 24px rgba(99, 102, 241, 0.1);
 }
-
+.my-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-family: monospace; /* dễ nhìn dạng số */
+  line-height: 1.5;
+  white-space: pre-wrap; /* giữ xuống dòng */
+  resize: vertical;
+  cursor: text;
+}
 .header .brand {
   font-size: 1.5rem;
   font-weight: 900;
