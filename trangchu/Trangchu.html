@@ -6,21 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Graph Theory</title>
-    <style>
-        .container {
-            max-width: 2000px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-        }
-
-        .doan-van {
-            text-indent: 20px;
-        }
-
-
-    </style>
 </head>
 <body>
 
@@ -40,8 +25,8 @@
     </header>
 
     <div class="container">
-        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center;">Đồ Thị Euler</h1>
-        <h2>1. Bài toán 7 cây cầu ở Konigsberg</h2>
+        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center; color: #3730a3;" class="line">Đồ Thị Euler</h1>
+        <h2 style="color: #3730a3;" class="section-title">1. Bài toán 7 cây cầu ở Konigsberg</h2>
         <p class="doan-van">Ở Konigsberg nước Đức, có một con sông chảy qua thành phố làm cho trung tâm của thành phố
             thành một hòn đảo.
             Sau khi vượt qua hòn đảo con sông bị chia làm hai nhánh.
@@ -68,7 +53,7 @@
             phát triển của lý
             thuyết đồ thị.</p>
 
-        <h2>2. Đồ thị Euler và đồ thị nửa Euler</h2>
+        <h2 style="color: #3730a3;" class="section-title">2. Đồ thị Euler và đồ thị nửa Euler</h2>
         <p class="doan-van">G=(X,U) là đồ thị hữu hạn liên thông</p>
         <p class="doan-van"><i><b>Đồ thị Euler</b></i></p>
         <p class="doan-van">Một chu trình trên G đi qua tất cả các cạnh/cung của G và mỗi cạnh cung đúng một lần được
@@ -110,7 +95,7 @@
         <p class="doan-van">Vấn đề đặt ra là khi nào thì một đồ thị hữu hạn liên thông là một đồ thị Euler, nửa Euler?
         </p>
 
-        <h2>3. Định lý Euler</h2>
+        <h2 style="color: #3730a3;" class="section-title">3. Định lý Euler</h2>
         <p class="doan-van"><i><b>Bổ đề</b></i></p>
         <p class="doan-van">G = (X,U) là đồ thị vô hướng hữu hạn.</p>
         <p class="doan-van">Nếu bậc của mỗi đỉnh G không nhỏ hơn 2 thì G có chứa chu trình.</p>
@@ -126,7 +111,7 @@
             tức là:</p>
         <p style="text-indent: 300px">d<sup>-</sup>(x) = d<sup>+</sup>(x), &forall;x &in; X</p>
 
-        <h2>4. Xác định chu trình Euler</h2>
+        <h2 style="color: #3730a3;" class="section-title">4. Xác định chu trình Euler</h2>
         <p style="text-indent: 100px;">G=(U,X) là đồ thị vô hướng hữu hạn.</p>
         <p style="text-indent: 100px;">Hãy tìm chu trình Euler của G nếu có.</p>
          <p class="doan-van"><i><b>Bước 1:</b></i></p>
@@ -157,8 +142,8 @@
 
 
 
-        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center;">Đồ Thị Hamilton</h1>
-        <h2>1. Trò chơi Hamilton</h2>
+        <h1 style="margin-top: 40px; margin-left: 20px; text-align: center; color: #3730a3;" class="line">Đồ Thị Hamilton</h1>
+        <h2 style="color: #3730a3;" class="section-title">1. Trò chơi Hamilton</h2>
         <p class="doan-van">Lịch sử phát sinh đồ thị Hamilton xuất phát từ trò chơi của nhà toán học William Hamilton, đưa ra năm 1859 như sau: xác định đường đi theo
             các cạnh của một thập nhị diện đều như hình vẽ sao cho phải đi qua tất cả các đỉnh, mỗi đỉnh đúng một lần rồi trở về đỉnh xuất phát.
         </p>
@@ -167,7 +152,7 @@
                 <img src="DT7.png" style="width: 600px; height: auto">
         </div>
 
-        <h2>2. Đồ thị Hamilton và đồ thị nửa Hamilton</h2>
+        <h2 style="color: #3730a3;" class="section-title">2. Đồ thị Hamilton và đồ thị nửa Hamilton</h2>
         <p class="doan-van">G=(X,U) là đồ thị.</p>
         <p class="doan-van"><i><b>Đồ thị Hamilton</b></i></p>
         <p class="doan-van">Một chu trình trên G bắt đầu từ một đỉnh nào đó, đi qua tất cả các đỉnh của G và đi qua mỗi đỉnh đúng một lần, và quay về đỉnh xuất phát được
@@ -208,7 +193,7 @@
             lý sau đây:
         </p>
 
-        <h2>3. Các định lý</h2>
+        <h2 style="color: #3730a3;" class="section-title">3. Các định lý</h2>
         <p class="doan-van"><i><b>Định lý Dirak</b></i></p>
         <p style="text-indent: 100px;">G=(X,U) là đồ thị đơn vô hướng với |X|>2.</p>
         <p style="text-indent: 100px;">Nếu mỗi đỉnh đều có bậc >= |X|/2 thì G là đồ thị Hamilton.</p>
@@ -231,7 +216,7 @@
         <p class="doan-van">1-Mọi đồ thị đấu loại là đồ thị nửa Hamilton.</p>
         <p class="doan-van">2-Mọi đồ thị đấu loại liên thông có hướng là đồ thị Hamilton.</p>
 
-        <h2>4. Xác định chu trình Hamilton</h2>
+        <h2 style="color: #3730a3;" class="section-title">4. Xác định chu trình Hamilton</h2>
         <p class="doan-van">Để tìm chu trình Hamilton trên đồ thị G người ta dựa vào nhận xét sau: Mỗi đỉnh trên chu trình Hamilton là đầu mút của đúng hai cạnh trên
             chu trình đó. Từ đó người ta có quy tắc:
         </p>

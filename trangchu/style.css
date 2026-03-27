@@ -186,3 +186,30 @@ hr {
   border: 0;
   border-top: 1px solid rgba(99, 102, 241, 0.15);
 }
+
+.container {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+}
+
+.doan-van {
+  text-indent: 20px;
+}
+
+.line {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #d1d5db; 
+  margin-bottom: 30px;
+}
+
+.section-title {
+  color: #3f51b5;
+  font-weight: bold;
+  padding-left: 15px; 
+  border-left: 5px solid #3f51b5; 
+  line-height: 1.2; 
+  margin: 20px 0;
+}
