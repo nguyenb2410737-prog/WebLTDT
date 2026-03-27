@@ -421,10 +421,22 @@ function bfsOrder(start) {
         q.push(nb);
       }
     }
+    
+    // --- ĐOẠN LỆNH THÊM VÀO ĐỂ XỬ LÝ ĐỒ THỊ RỜI RẠC ---
+    if (q.length === 0) {
+      for (const node in adjList) {
+        const n = Number(node); // Ép kiểu về số nếu key của adjList là chuỗi
+        if (!vis.has(n)) {
+          vis.add(n);
+          q.push(n);
+          break; // Chỉ nạp 1 đỉnh mới để tiếp tục vòng lặp while
+        }
+      }
+    }
+    // ------------------------------------------------
   }
   return ev;
 }
-
 // DFS
 function dfsOrder(start) {
   const ev = [], vis = new Set();
@@ -498,4 +510,4 @@ window.addEventListener('resize', () => {
     nodes    = layoutNodes(n);
     renderGraph();
   }
-});
+});v
