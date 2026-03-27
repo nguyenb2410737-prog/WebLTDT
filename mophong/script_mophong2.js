@@ -8,6 +8,7 @@
 //    - Speed slider (thêm vào panel trái qua JS)
 //    - SVG render với glow/shadow, mũi tên có hướng
 //    - BFS / DFS animation từng bước
+//    - Vẽ khuyên (self-loop) cho cạnh u == v
 // ============================================================
 
 // ============================================================
@@ -55,13 +56,9 @@ const resultEl     = document.getElementById('result');
 // ============================================================
 //  INJECT: SVG vào .graph (thay thế cách dùng div node cũ)
 // ============================================================
-// Xoá svg cũ nếu có, tạo svg#canvas mới
 (function injectSVG() {
-  // Xoá svg cũ trong #graph (nếu có id="edges")
   const oldSvg = document.getElementById('edges');
   if (oldSvg) oldSvg.remove();
-
-  // Xoá các div.node-circle cũ nếu tồn tại
   document.querySelectorAll('.node-circle').forEach(el => el.remove());
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -92,8 +89,6 @@ const svgEl = document.getElementById('canvas');
 
   const wrap = document.createElement('div');
   wrap.innerHTML = sliderHTML;
-
-  // Chèn trước nút RUN
   runBtn.parentNode.insertBefore(wrap, runBtn);
 
   document.getElementById('speedRange').oninput = function () {
@@ -154,6 +149,11 @@ const svgEl = document.getElementById('canvas');
       <div style="width:22px;height:4px;border-radius:3px;
         background:${PALETTE.edgeVisited};flex-shrink:0;"></div>
       Cạnh đã đi
+    </div>
+    <div style="display:flex;align-items:center;gap:7px;color:#475569;font-size:.78rem;margin-top:3px;">
+      <div style="width:16px;height:10px;border-radius:50%;
+        border:2px solid ${PALETTE.nodeStroke};flex-shrink:0;background:transparent;"></div>
+      Khuyên (self-loop)
     </div>`;
   conclusion.appendChild(legend);
 })();
@@ -205,7 +205,7 @@ function buildAdj() {
   nodes.forEach(n => (adjList[n.id] = []));
   edges.forEach(({ u, v }) => {
     adjList[u].push(v);
-    if (!directed) adjList[v].push(u);
+    if (!directed && u !== v) adjList[v].push(u);
   });
 }
 
@@ -221,7 +221,6 @@ function randomGraph() {
   const H     = rect.height || 500;
   const count = 5 + Math.floor(Math.random() * 5); // 5–9 đỉnh
 
-  // Xếp vòng tròn cho random (nhất quán, dễ đọc)
   const cx = W / 2, cy = H / 2;
   const r  = Math.min(cx, cy) * 0.70;
   nodes = Array.from({ length: count }, (_, i) => ({
@@ -230,14 +229,17 @@ function randomGraph() {
     y:  cy + r * Math.sin((2 * Math.PI * i) / count - Math.PI / 2),
   }));
 
-  // Sinh cạnh: đảm bảo liên thông + thêm ngẫu nhiên
   const used = new Set();
   edges = [];
+
+  // Chuỗi liên thông cơ bản
   for (let i = 1; i < count; i++) {
     const u = i, v = i + 1;
     edges.push({ u, v });
     used.add(`${Math.min(u,v)}-${Math.max(u,v)}`);
   }
+
+  // Cạnh bổ sung (thông thường)
   const extra = count + 2;
   for (let t = 0; t < extra * 6 && edges.length < extra; t++) {
     const u = 1 + Math.floor(Math.random() * count);
@@ -247,7 +249,17 @@ function randomGraph() {
     if (!used.has(k)) { used.add(k); edges.push({ u, v }); }
   }
 
-  // Đồng bộ lại các ô nhập để nhất quán
+  // Thêm 1–2 khuyên ngẫu nhiên (~40% xác suất)
+  if (Math.random() < 0.4) {
+    const loopCount = 1 + Math.floor(Math.random() * 2);
+    const shuffled  = [...Array(count).keys()].map(i => i + 1).sort(() => Math.random() - 0.5);
+    for (let i = 0; i < Math.min(loopCount, shuffled.length); i++) {
+      const u = shuffled[i];
+      const k = `loop-${u}`;
+      if (!used.has(k)) { used.add(k); edges.push({ u, v: u }); }
+    }
+  }
+
   nodeCountEl.value = count;
   startNodeEl.value = 1;
   edgeListEl.value  = edges.map(e => `${e.u} ${e.v}`).join('\n');
@@ -273,12 +285,87 @@ function clearResult() {
 }
 
 // ============================================================
-//  SVG RENDER
+//  HELPER: eKey
 // ============================================================
 function eKey(u, v) {
+  if (u === v) return `loop_${u}`;
   return directed ? `${u}_${v}` : `${Math.min(u,v)}_${Math.max(u,v)}`;
 }
 
+// ============================================================
+//  VẼ KHUYÊN (self-loop)
+//  Dùng cubic Bézier: 2 điểm đầu/cuối nằm trên viền đỉnh,
+//  2 control point đẩy xa ra ngoài → tạo vòng tròn đẹp.
+//  Marker mũi tên gắn vào marker-end của <path> → hướng chính xác.
+// ============================================================
+function drawSelfLoop(node, visited) {
+  const p      = PALETTE;
+  const stroke = visited ? p.edgeVisited : p.edge;
+  const sw     = visited ? 2.5 : 1.8;
+  const markerId = visited ? 'arrow-visited' : 'arrow-default';
+
+  // ── Hướng ra ngoài tính từ tâm đồ thị ──
+  const rect = svgEl.getBoundingClientRect();
+  const W  = rect.width  || graphEl.clientWidth  || 700;
+  const H  = rect.height || graphEl.clientHeight || 500;
+  const dx = node.x - W / 2;
+  const dy = node.y - H / 2;
+  const d  = Math.sqrt(dx * dx + dy * dy) || 1;
+  // Vector đơn vị hướng ra ngoài
+  const ox = dx / d,  oy = dy / d;
+  // Vector vuông góc (sang phải của ox,oy)
+  const px = -oy,     py =  ox;
+
+  // ── Hai điểm bắt đầu / kết thúc trên viền đỉnh ──
+  // Lệch ±25° so với hướng ra để vòng khép kín đẹp
+  const SPREAD = 0.44; // radian (~25°)
+  const cosS = Math.cos(SPREAD), sinS = Math.sin(SPREAD);
+
+  // Điểm xuất phát P0: xoay hướng +SPREAD quanh tâm đỉnh
+  const d0x = ox * cosS - oy * sinS;
+  const d0y = ox * sinS + oy * cosS;
+  const P0x = node.x + d0x * NODE_R;
+  const P0y = node.y + d0y * NODE_R;
+
+  // Điểm kết thúc P3: xoay hướng -SPREAD
+  const d3x = ox * cosS + oy * sinS;
+  const d3y = -ox * sinS + oy * cosS;
+  const P3x = node.x + d3x * NODE_R;
+  const P3y = node.y + d3y * NODE_R;
+
+  // ── Hai control point đẩy xa ra ngoài ──
+  const BULGE = NODE_R * 2.6;  // khoảng đẩy ra ngoài
+  const SIDE  = NODE_R * 1.1;  // khoảng sang hai bên
+
+  const C1x = node.x + ox * BULGE + px * SIDE;
+  const C1y = node.y + oy * BULGE + py * SIDE;
+  const C2x = node.x + ox * BULGE - px * SIDE;
+  const C2y = node.y + oy * BULGE - py * SIDE;
+
+  // ── Path Bézier bậc 3 ──
+  const pathData = `M ${P0x} ${P0y} C ${C1x} ${C1y}, ${C2x} ${C2y}, ${P3x} ${P3y}`;
+
+  const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  el.setAttribute('d',            pathData);
+  el.setAttribute('fill',         'none');
+  el.setAttribute('stroke',       stroke);
+  el.setAttribute('stroke-width', sw);
+
+  // Gắn mũi tên chỉ khi đồ thị có hướng
+  if (directed) {
+    el.setAttribute('marker-end', `url(#${markerId})`);
+  }
+
+  if (visited) {
+    el.style.filter = `drop-shadow(0px 0px 4px ${p.edgeVisited})`;
+  }
+
+  svgEl.appendChild(el);
+}
+
+// ============================================================
+//  SVG RENDER
+// ============================================================
 function renderGraph() {
   if (!svgEl) return;
   svgEl.innerHTML = '';
@@ -311,13 +398,21 @@ function renderGraph() {
   // ── Đếm cặp ngược chiều (vẽ cong nếu cả hai chiều tồn tại) ──
   const pairCount = {};
   edges.forEach(({ u, v }) => {
+    if (u === v) return;
     const k = `${Math.min(u,v)}-${Math.max(u,v)}`;
     pairCount[k] = (pairCount[k] || 0) + 1;
   });
   const pairIdx = {};
 
-  // ── Vẽ cạnh ──
+  // ── Vẽ cạnh thường (u ≠ v) ──
   edges.forEach(({ u, v }) => {
+    // --- Khuyên: xử lý riêng ---
+    if (u === v) {
+      const node = nodes.find(n => n.id === u);
+      if (node) drawSelfLoop(node, !!edgeState[eKey(u, v)]);
+      return;
+    }
+
     const n1 = nodes.find(n => n.id === u);
     const n2 = nodes.find(n => n.id === v);
     if (!n1 || !n2) return;
@@ -331,7 +426,6 @@ function renderGraph() {
     const sw     = vis ? 2.5 : 1.5;
     const marker = directed ? (vis ? 'url(#arrow-visited)' : 'url(#arrow-default)') : null;
 
-    // Tính điểm đầu/cuối trên viền nút
     const dx = n2.x - n1.x, dy = n2.y - n1.y;
     const len = Math.sqrt(dx*dx + dy*dy) || 1;
     const ux = dx/len, uy = dy/len;
@@ -355,16 +449,15 @@ function renderGraph() {
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', sw);
     if (marker) el.setAttribute('marker-end', marker);
-    
-    // FIX TẠI ĐÂY: Thay filter của SVG bằng thuộc tính css filter
+
     if (vis) {
-        el.style.filter = `drop-shadow(0px 0px 4px ${p.edgeVisited})`;
+      el.style.filter = `drop-shadow(0px 0px 4px ${p.edgeVisited})`;
     }
-    
+
     svgEl.appendChild(el);
   });
 
-  // ── Vẽ đỉnh ──
+  // ── Vẽ đỉnh (luôn vẽ sau cạnh để nằm trên) ──
   nodes.forEach(n => {
     const state  = nodeState[n.id] || 'default';
     const g      = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -418,38 +511,52 @@ function bfsOrder(start) {
   while (q.length) {
     const cur = q.shift();
     ev.push({ type: 'node_active',  id: cur });
+
+    // Xử lý khuyên của đỉnh hiện tại (nếu có)
+    edges
+      .filter(e => e.u === e.v && e.u === cur)
+      .forEach(() => ev.push({ type: 'edge', u: cur, v: cur }));
+
     ev.push({ type: 'node_visited', id: cur });
     for (const nb of (adjList[cur] || [])) {
+      if (nb === cur) continue; // khuyên đã xử lý riêng
       if (!vis.has(nb)) {
         vis.add(nb);
         ev.push({ type: 'edge', u: cur, v: nb });
         q.push(nb);
       }
     }
-    
-    // --- ĐOẠN LỆNH THÊM VÀO ĐỂ XỬ LÝ ĐỒ THỊ RỜI RẠC ---
+
+    // Đồ thị rời rạc: nạp thêm đỉnh chưa thăm
     if (q.length === 0) {
       for (const node in adjList) {
-        const n = Number(node); // Ép kiểu về số nếu key của adjList là chuỗi
-        if (!vis.has(n)) {
-          vis.add(n);
-          q.push(n);
-          break; // Chỉ nạp 1 đỉnh mới để tiếp tục vòng lặp while
+        const nb = Number(node);
+        if (!vis.has(nb)) {
+          vis.add(nb);
+          q.push(nb);
+          break;
         }
       }
     }
-    // ------------------------------------------------
   }
   return ev;
 }
+
 // DFS
 function dfsOrder(start) {
   const ev = [], vis = new Set();
   function dfs(cur) {
     vis.add(cur);
     ev.push({ type: 'node_active',  id: cur });
+
+    // Xử lý khuyên của đỉnh hiện tại (nếu có)
+    edges
+      .filter(e => e.u === e.v && e.u === cur)
+      .forEach(() => ev.push({ type: 'edge', u: cur, v: cur }));
+
     ev.push({ type: 'node_visited', id: cur });
     for (const nb of (adjList[cur] || [])) {
+      if (nb === cur) continue; // khuyên đã xử lý riêng
       if (!vis.has(nb)) {
         ev.push({ type: 'edge', u: cur, v: nb });
         dfs(nb);
@@ -502,7 +609,6 @@ runBtn.addEventListener('click', () => {
   buildAdj();
   renderGraph();
 
-  // Nhỏ delay để DOM render SVG xong trước khi animate
   setTimeout(() => runTraversal(parsed.start), 80);
 });
 
