@@ -355,7 +355,12 @@ function renderGraph() {
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', sw);
     if (marker) el.setAttribute('marker-end', marker);
-    if (vis)    el.setAttribute('filter', 'url(#glow)');
+    
+    // FIX TẠI ĐÂY: Thay filter của SVG bằng thuộc tính css filter
+    if (vis) {
+        el.style.filter = `drop-shadow(0px 0px 4px ${p.edgeVisited})`;
+    }
+    
     svgEl.appendChild(el);
   });
 
@@ -387,10 +392,10 @@ function renderGraph() {
     text.setAttribute('y',                 n.y);
     text.setAttribute('text-anchor',       'middle');
     text.setAttribute('dominant-baseline', 'central');
-    text.setAttribute('fill',             tColor);
-    text.setAttribute('font-size',        '14');
-    text.setAttribute('font-weight',      'bold');
-    text.setAttribute('font-family',      'Times New Roman, serif');
+    text.setAttribute('fill',              tColor);
+    text.setAttribute('font-size',         '14');
+    text.setAttribute('font-weight',       'bold');
+    text.setAttribute('font-family',       'Times New Roman, serif');
     text.textContent = n.id;
 
     g.appendChild(circle);
@@ -510,4 +515,4 @@ window.addEventListener('resize', () => {
     nodes    = layoutNodes(n);
     renderGraph();
   }
-});v
+});
